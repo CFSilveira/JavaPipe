@@ -20,41 +20,41 @@ class Pipes {
     draw() {
         if (this.type === 1) {
             if (this.facing === 1) {
-                this.img.src = './images/bhorseright.png';
+                this.img.src = './images/1pipe1.png';
             } else if (this.facing === 2) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/1pipe2.png';}
             } else if (this.facing === 3) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/1pipe3.png';}
             } else if (this.facing === 4) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/1pipe4.png';}
             }
         }
                     
         else if (this.type === 2) {
             if (this.facing === 1) {
-                this.img.src = './images/bhorseright.png';
+                this.img.src = './images/2pipe1.png';
             } else if (this.facing === 2) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/2pipe1.png';}
             } else if (this.facing === 3) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/2pipe1.png';}
             } else if (this.facing === 4) {
-                {this.img.src = './images/bhorseleft.png';}
+                {this.img.src = './images/2pipe1.png';}
+            }
+        }
+
+        else if (this.type === 3) {
+            if (this.facing === 1) {
+                this.img.src = './images/3pipe1.png';
+            } else if (this.facing === 2) {
+                {this.img.src = './images/3pipe2.png';}
+            } else if (this.facing === 3) {
+                {this.img.src = './images/3pipe3.png';}
+            } else if (this.facing === 4) {
+                {this.img.src = './images/3pipe4.png';}
             }
         }
 
         else if (this.type === 4) {
-            if (this.facing === 1) {
-                this.img.src = './images/bhorseright.png';
-            } else if (this.facing === 2) {
-                {this.img.src = './images/bhorseleft.png';}
-            } else if (this.facing === 3) {
-                {this.img.src = './images/bhorseleft.png';}
-            } else if (this.facing === 4) {
-                {this.img.src = './images/bhorseleft.png';}
-            }
-        }
-
-        else if (this.type === 5) {
             if (this.facing === 1) {
                 this.img.src = './images/bhorseright.png';
             } else if (this.facing === 2) {
@@ -97,14 +97,14 @@ class Pipes {
 
 }
 
-class BlueSoldier extends Soldiers {
+class NeutralPipe extends Pipes {
     constructor(game, faction, type, x, y, width, height, gps, hp, facing, isSelected, stamina) {
         super(game, type, x, y, width, height, gps, hp, facing, isSelected, stamina);
-        this.faction = 'blue';
+        this.faction = 'neutral';
     }
 }
 
-class RedSoldier extends Soldiers {
+class ExitPipe extends Pipes {
     constructor(game, faction, type, x, y, width, height, gps, hp, facing, isSelected, stamina) {
         super(game, type, x, y, width, height, gps, hp, facing, isSelected, stamina);
         this.faction = 'red';

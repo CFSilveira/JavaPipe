@@ -9,6 +9,12 @@ class Game {
         this.canvasWidth = 1200;
         this.canvasHeight = 800;
         this.intervalId = null;
+        this.neutralPipes = [];
+        this.placedPipes = [];
+        this.exitPipes = [];
+        this.obstaclesArray = [];
+
+
     }
 
 
@@ -25,80 +31,60 @@ class Game {
             let gps = xAxis.toString() + yAxis.toString()
             let stamina = 5;
             if (i < 1) {
-                this.pipes = new BlueSoldier(this, 'blue', typeOfPipe, xAxis, yAxis, 100, 100, gps, 10, '1', true, stamina);
+                this.pipes = new NeutralPipe(this, 'neutral', typeOfPipe, xAxis, yAxis, 100, 100, gps, 10, 1, true, stamina);
             } else {
                 yAxis = yAxis + 100;
-                this.pipes = new BlueSoldier(this, 'blue', typeOfPipe, xAxis, yAxis, 100, 100, gps, 10, '1', false, stamina);
+                this.pipes = new NeutralPipe(this, 'neutral', typeOfPipe, xAxis, yAxis, 100, 100, gps, 10, 1, false, stamina);
             }
             let newPipe = this.Pipes;
             this.neutralPipes.push(newPipe);
            
         }
-        console.log(`Blue Army: `, this.blueArmy);
+        console.log(`Neutral Pipes: `, this.neutralPipes);
 
-        //random creation and positioning of red units
-        for (let i = 1 ; i <= 4; i++) {
-            let xAxis = Math.floor(Math.random() * 5) + 7;
+        //random creation and positioning of entrance and exit
+        for (let i = 1 ; i <= 2; i++) {
+            let xAxis = Math.floor(Math.random() * 5) + 1;
             let yAxis = Math.floor(Math.random() * 8);
-            let typeOfSoldier = Math.floor(Math.random() * 3) + 1;
             let gps = xAxis.toString() + yAxis.toString()
             xAxis = xAxis * 100;
             yAxis = yAxis * 100;
-            let stamina = 5;
-            if (i < 4) {
-                this.soldiers = new RedSoldier(this, 'red', typeOfSoldier, xAxis, yAxis, 100, 100, gps, 10, 'left', false, stamina);
-            }
-            else {
-                this.soldiers = new RedSoldier(this, 'red', typeOfSoldier, xAxis, yAxis, 100, 100, gps, 10, 'left', true, stamina);
-            }
-            let newSoldier = this.soldiers;
+            this.pipes = new ExitPipe(this, 'exit', "exit", xAxis, yAxis, 100, 100, gps, 10, 1, false, stamina);
+            let newPipe = this.pipes;
             //checking if there is another soldier on that square
-            this.redArmy.push(newSoldier);
-            for (let j = 0; j < this.redArmy.length - 1; j++) {
-                if (gps === this.redArmy[j].gps) {
-                console.log(`There is a unit already on position ${gps}. Duplicate removed!`);
+            this.exitPipes.push(newPipe);
+            for (let j = 0; j < this.exitPipes.length - 1; j++) {
+                if (gps === this.exitPipes[j].gps) {
+                console.log(`There is already an exit on position ${gps}. Duplicate removed!`);
                 i--;
-                this.redArmy.pop();
+                this.exitPipes.pop();
                 }
             }
         }
-        console.log(`Red Army: `, this.redArmy);
+        console.log(`Exit Pipes: `, this.exitPipes);
 
-        //random creation and positioning of blue, neutral and red bases - improved the unit creation method
-        for (let i = 1; i <= 6; i++) {
-            let xAxis = Math.floor(Math.random() * 4);
-            if (i >= 4) {xAxis = xAxis + 7};
-            let yAxis = Math.floor(Math.random() * 6) + 1;
+        //random creation and positioning of obstacles
+        for (let i = 1; i <= 3; i++) {
+            let xAxis = Math.floor(Math.random() * 9) + 1;
+            let yAxis = Math.floor(Math.random() * 9) + 1;
             let gps = xAxis.toString() + yAxis.toString()
             xAxis = xAxis * 100;
             yAxis = yAxis * 100;
-            if (i <= 2) {
-                this.bases = new Bases(this, 'blue', xAxis, yAxis, 100, 100, gps, 0);
-            }
-            else if (i === 3) {
-                this.bases = new Bases(this, 'neutral', xAxis, yAxis, 100, 100, gps, 0);
-            }
-            else if (i === 4) {
-                this.bases = new Bases(this, 'neutral', xAxis, yAxis, 100, 100, gps, 0);
-            }
-            else if (i > 4) {
-                this.bases = new Bases(this, 'red', xAxis, yAxis, 100, 100, gps, 0);
-            }
-            let newBase = this.bases;
-            //checking if there is another soldier on that square
-            this.baseArray.push(newBase);
-            for (let j = 0; j < this.baseArray.length - 1; j++) {
-                if (gps === this.baseArray[j].gps) {
-                console.log(`There is already a base on position ${gps}. Duplicate removed!`);
+            this.obstacles = new Obstacles(this, 'obstacle', xAxis, yAxis, 100, 100, gps, 0);
+            let obstacle = this.obstacles;
+            //checking if there is another obstacle or exit on that square
+            this.obstaclesArray.push(obstacle);
+            for (let j = 0; j < this.obstaclesArray.length - 1; j++) {
+                if (gps === this.obstaclesArray[j].gps) {
+                console.log(`There is already an obstacle on position ${gps}. Duplicate removed!`);
                 i--;
-                this.baseArray.pop();
+                this.obstaclesArray.pop();
                 }
             }
 
         }
-        console.log('Bases: ', this.baseArray);
+        console.log('Obstacles: ', this.obstaclesArray);
 
-        this.computer = new Computer(this);        
 
         const controls = new Controls(this);
         controls.keyboardEvents(); 
